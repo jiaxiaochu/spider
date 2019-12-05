@@ -10,8 +10,9 @@ reg = r'src="(.+?\.jpg)"'
 img_pic = re.compile(reg)
 pic_url_list = re.findall(img_pic, content)
 for pic_url in pic_url_list:
-    print(pic_url)
-    pic = requests.get(pic_url, headers)
+    # print(pic_url,type(pic_url))
+    # url = "https//:" + pic_url
+    pic = requests.get(pic_url)
     data = pic.content
     pic_name = '%f.jpg' % time.time()
     with open('.image/book_scrape' + pic_name, 'wb') as file:
