@@ -13,9 +13,9 @@ headers = {
 start_url = "https://movie.douban.com/top250?start=0&filter="
 res = requests.get(start_url, headers=headers)
 response = BeautifulSoup(res.text, 'html.parser')
-data = response.find_all('ol', class_="grid_view")
-content = response.find_all('li')
-for item in content:
+data = response.find_all('div', class_="item")
+# content = response.find_all('li')
+for item in data:
     # print(item)
     '''
         查找序号    num
@@ -24,12 +24,6 @@ for item in content:
         查找评分    score
         连接  link
     '''
-    # try:
-    #     num = item.find('em', class_="").text
-    #     if num is None:
-    #         break
-    # except:
-    #     print("error")
     num = item.find('em', class_="")
     move_name = item.find('span', class_="title").text
     recommend = item.find('span', class_="inq").text
