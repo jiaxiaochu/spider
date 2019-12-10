@@ -92,4 +92,4 @@ if __name__ == '__main__':
         url = 'https://movie.douban.com/top250?start=0&filter=%s' % ((page - 1) * perPage)
         content = get_content(url)
         parser_content(content)
-    save_to_excel('../source/source_file/douban_mv.xlsx', mv_info, sheetname='豆瓣Top250电影信息')
+    save_to_excel('../../source/source_file/douban_mv.xlsx', mv_info, sheetname='豆瓣Top250电影信息')

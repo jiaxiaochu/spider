@@ -34,6 +34,6 @@ for pic_url in pic_url_list:
     pic = pic_1.content  # content   以字节的方式响应对象，遇到图片的时候，我们可以使用
     # 为了保证所有的图片名字不冲突，我们使用time.time()生成的浮点型时间戳来代替名字
     pic_name = '%f.jpg' % time.time()
-    with open("./pic/" + pic_name, "wb") as file:
+    with open("../../source/source_pic/" + pic_name, "wb") as file:
         file.write(pic)
 print("亲爱的，让你久等了，下载完毕，请查收 ~ ~ ~！")

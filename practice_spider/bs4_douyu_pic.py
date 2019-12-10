@@ -23,6 +23,6 @@ if __name__ == '__main__':
         img_response = requests.get(img)
         # print(img_response)
         img = img_response.content
-        img_path = './pic/%s.png' % num
-        with open(img_path, "wb") as file:
-            file.write(img)
+        # img_path = './pic/%s.png' % num
+        # with open(img_path, "wb") as file:
+        #     file.write(img)
