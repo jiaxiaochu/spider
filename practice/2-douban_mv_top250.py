@@ -53,14 +53,14 @@ def parser_content(html_content):
     soup = BeautifulSoup(html_content, 'html.parser')
     data = soup.find_all('div', class_="item")
     for item in data:
-        num = item.find('em', class_="").get_text()
-        move_name = item.find('span', class_="title").get_text()
+        num = item.find('em', class_="").text
+        move_name = item.find('span', class_="title").text
         recommend = item.find('span', class_="inq")
-        score = item.find('span', class_="rating_num").get_text()
-        score_people_count = item.find('span').get_text()
+        score = item.find('span', class_="rating_num").text
+        score_people_count = item.find('span').text
         link = item.find('a')['href']
         if recommend:
-            mv_recommend = recommend.get_text()
+            mv_recommend = recommend.text
         else:
             mv_recommend = '无短评'
         mv_info.append((num, move_name, mv_recommend, score, score_people_count, link))
