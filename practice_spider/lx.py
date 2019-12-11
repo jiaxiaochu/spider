@@ -1,21 +1,24 @@
-# !/Library/Frameworks/Python.framework/Versions/3.7/bin/python3
-# -*- coding:utf-8 -*-
-# @Author : Jiazhixiang
-# @Time : 2019/12/10
+import smtplib
+from email.mime.text import MIMEText
+from email.header import Header
 
-import requests
-# 引用requests模块
+account = input('请输入你的邮箱：')
+password = input('请输入你的密码：')
+receiver = input('请输入收件人的邮箱：')
 
-for i in range(0,3):
-    url = 'https://movie.douban.com/j/search_subjects?type=movie&tag=%E7%83%AD%E9%97%A8&sort=recommend&page_limit=20&page_start='+str(i*20)
-    res_movie = requests.get(url)
-    # 调用get方法，下载电影列表
-    json_movie = res_movie.json()
-    # 使用json()方法，将response对象，转为列表/字典
-    # print(json_movie)
-    list_movies = json_movie['subjects']
-    # 一层一层地取字典，获取电影名称
-    for comment in list_movies:
-    # list_movies，comment是它里面的元素
-        print(comment['title'])
-    #     # 输出电影名名称
+
+def send_email(tem, weather):
+    mailhost = 'smtp.qq.com'
+    qqmail = smtplib.SMTP()
+    qqmail.connect(mailhost, 25)
+    qqmail.login(account, password)
+    content = '亲爱的，今天的天气是：' + tem + weather
+    message = MIMEText(content, 'plain', 'utf-8')
+    subject = '今日天气预报'
+    message['Subject'] = Header(subject, 'utf-8')
+    try:
+        qqmail.sendmail(account, receiver, message.as_string())
+        print('邮件发送成功')
+    except:
+        print('邮件发送失败')
+    qqmail.quit()
