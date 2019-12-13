@@ -1,8 +1,11 @@
+# !/Library/Frameworks/Python.framework/Versions/3.7/bin/python3
+# -*- coding:utf-8 -*-
+# @Author : Jiazhixiang
+
 # 1.获取数据
 # 2.解析数据
 # 3.提取数据
 # 4.存储数据
-
 
 
 '''

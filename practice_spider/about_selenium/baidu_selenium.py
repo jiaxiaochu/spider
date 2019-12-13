@@ -1,6 +1,15 @@
-import requests
+# !/Library/Frameworks/Python.framework/Versions/3.7/bin/python3
+# -*- coding:utf-8 -*-
+# @Author : Jiazhixiang
 
-headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.65 Safari/535.11"
-}
+import time
+from selenium import webdriver
+
 start_url = "https://www.baidu.com/"
+driver = webdriver.Chrome()
+driver.get(url=start_url)
+
+html = driver.page_source
+print(html)
+time.sleep(1)
+driver.close()
