@@ -1,47 +1,52 @@
-# import openpyxl
-# import datetime
-# import numpy as np
-# import random
-#
-# zts = int(input())
-# zts = zts + 1
-# zrs = int(input())
-# zrs = zrs + 1
-#
-# wb = openpyxl.load_workbook("sample.xlsx")
-# ws = wb.worksheets[0]
-# for col in ws.iter_cols(min_row=2, min_col=2, max_row=zrs, max_col=zts):
-#     print(col)
-#     for cell in col:
-#         if col == 1 or 2:
-#             continue
-#         else:
-#             a = np.random.randint(1, 3)
-#             cell.value = a
-#
-# wb.save("sample.xlsx")
+from gevent import monkey
 
-import os
+monkey.patch_all()
+import gevent, time, requests
+from bs4 import BeautifulSoup
+from gevent.queue import Queue
+import csv
 
-size = os.path.getsize('./sample.xlsx')
-if size == 0:
-    print("文件是空的")
-else:
-    print("文件不是空的")
+csv_file = open('books.csv', 'w', newline='')
+writer = csv.writer(csv_file)
+
+url = 'https://book.douban.com/top250'
+pageSize = 25
+startPage = 0
+start = time.time()
+
+work = Queue()
+
+for i in range(10):
+    params = {
+        'start': startPage + i * pageSize
+    }
+    work.put_nowait(params)
 
 
-infilename = r'D:\sample.xlsx'
-workbook = xlrd.open_workbook(infilename)
-df = workbook.sheet_by_name('sheetname')
-num_rows = df.nrows - 1  # 我这里是第一行不要，所以跳过了
-num_cols = df.ncols
-t = 0
-im_data = np.zeros((num_rows, num_cols))
-for curr_row in range(1, num_rows+1):
-    for curr_col in range(num_cols):
-        rawVal = df.cell(curr_row, curr_col).value
-        # 判断该单元格数值是否为字符串，当然如果你的excel中本来就有字符串格式数据，这里可以更改为判断是否为空字符串，稍微修改一下即可
-        if isinstance(rawVal, str):
-            im_data[curr_row - 1, curr_col] = np.nan
-        else:
-            im_data[curr_row - 1, curr_col] = float(rawVal)
+def crawler():
+    while not work.empty():
+        param = work.get_nowait()
+        res = requests.get(url, params=param)
+        books_html = BeautifulSoup(res.text, 'html.parser')
+        indent_div = books_html.find('div', class_='indent')
+        list_books = indent_div.find_all('table')
+        for book in list_books:
+            title_div = book.find('div', class_='pl2')
+            tag_a = title_div.find('a')
+            title = tag_a.text.replace(' ', '').replace('\n', '')
+            tag_p = book.find('p', class_='pl')
+            author = tag_p.text.replace(' ', '').replace('\n', '')
+            tag_span = book.find('span', class_='rating_nums')
+            rating_nums = tag_span.text.replace(' ', '').replace('\n', '')
+            print(title, author, rating_nums)
+            writer.writerow([title, author, rating_nums])
+
+
+tasks_list = []
+for x in range(5):
+    task = gevent.spawn(crawler)
+    tasks_list.append(task)
+gevent.joinall(tasks_list)
+end = time.time()
+print(end - start)
+csv_file.close()

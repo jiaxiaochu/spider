@@ -16,3 +16,8 @@ class DoubanItem(scrapy.Item):
     score = scrapy.Field()     # 定义书籍的评分属性
     recommend = scrapy.Field()  # 定义书籍的推荐语属性
 
+
+class DoubanCommentsItem(scrapy.Item):
+    book_name = scrapy.Field()
+    ID_name = scrapy.Field()
+    comment = scrapy.Field()
