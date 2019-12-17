@@ -7,7 +7,7 @@ from ..items import DoubanCommentsItem
 
 
 class DoubantopSpider(scrapy.Spider):
-    name = 'douban_comments_spider'
+    name = 'douban_comments'
     allowed_domains = ['book.douban.com']
     start_urls = []
     for x in range(2):
@@ -21,6 +21,7 @@ class DoubantopSpider(scrapy.Spider):
             book_url = data.find_all('a')[1]['href']
             comment_url = book_url + 'comments/'
             yield scrapy.Request(comment_url, callback=self.parse_comment)
+ # scrapy.Request是构造requests对象的类。real_url是我们往requests对象里传入的评论信息网址的参数。
 
     def parse_comment(self, response):
         soup = bs4.BeautifulSoup(response.text, 'html.parser')
