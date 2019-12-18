@@ -1,7 +1,6 @@
 # !/Library/Frameworks/Python.framework/Versions/3.7/bin/python3
 # -*- coding:utf-8 -*-
 # @Author : Jiazhixiang
-
 # 利用多协程和队列，来爬取豆瓣图书Top250（书名，作者，评分）并存储csv 豆瓣图书
 # gevent    Queue
 # book_name author(publish)  score   ——>   豆瓣图书.csv
