@@ -1,2 +1,5 @@
 # spider
-我的Python爬虫学习
+Python爬虫
+- requests
+- BeautifulSoup
+- Scrapy
