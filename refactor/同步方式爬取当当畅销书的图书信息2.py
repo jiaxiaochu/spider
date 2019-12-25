@@ -10,8 +10,8 @@ from bs4 import BeautifulSoup
 def get_content(url, headers):
     try:
         response = requests.get(url, headers)
-        response.raise_for_status()
-        response.encoding = response.apparent_encoding
+        # response.raise_for_status()
+        # response.encoding = response.apparent_encoding
     except Exception as e:
         print("爬虫请求{}响应错误".format(i for i in range(1, 26)))
     else:
@@ -31,7 +31,7 @@ def parser_content(html_content):
         name = book.find('div', class_="name").find('a')['title']
         author = book.find('div', class_="publisher_info").find('a')['title']
         price = book.find('div', class_="price").find('span', class_="price_n").text
-        # print("书名：{};\t作者：{};\t价格：{}".format(name, author, price))
+        print("书名：{};\t作者：{};\t价格：{}".format(name, author, price))
         mv_info.append([name, author, price])
         # print(item)
         # return mv_info
@@ -50,7 +50,7 @@ if __name__ == '__main__':
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
     }
     url_list = ["http://bang.dangdang.com/books/bestsellers/01.00.00.00.00.00-recent7-0-0-1-%d" % i for i in
-                range(1, 26)]
+                range(1, 3)]
     # 统计该爬虫的消耗时间
     print("#" * 66)
     start_time = time.time()

@@ -5,11 +5,13 @@ import time
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
+
 '''
 遇到不懂的问题？Python学习交流群：821460695满足你的需求，资料都已经上传群文件，可以自行下载！
 '''
 # table表格用于储存书本信息
 table = []
+
 
 # 处理网页
 def download(url):
@@ -36,7 +38,7 @@ def download(url):
 
 
 # 全部网页
-urls = ['http://bang.dangdang.com/books/bestsellers/01.00.00.00.00.00-recent7-0-0-1-%d' % i for i in range(1, 26)]
+urls = ['http://bang.dangdang.com/books/bestsellers/01.00.00.00.00.00-recent7-0-0-1-%d' % i for i in range(1, 3)]
 
 # 统计该爬虫的消耗时间
 print('#' * 50)
@@ -47,7 +49,7 @@ for url in urls:
 
 # 将table转化为pandas中的DataFrame并保存为CSV格式的文件
 df = pd.DataFrame(table, columns=['rank', 'name', 'comments', 'author', 'publisher'])
-df.to_csv('E://douban/dangdang.csv', index=False)
+df.to_csv('./dangdang.csv', index=False)
 
 t2 = time.time()  # 结束时间
 print('使用一般方法，总共耗时：%s' % (t2 - t1))
