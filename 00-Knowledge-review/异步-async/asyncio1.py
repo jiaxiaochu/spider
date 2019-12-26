@@ -5,4 +5,13 @@ import time
 import asyncio
 
 now = lambda: time.time()
-print(now())
+
+
+# print(now())
+
+
+async def do_some_work(x):
+    print("waiting:", x)
+start = now()
+coroutine = do_some_work(2)
+print(coroutine)
