@@ -15,3 +15,6 @@ for item in content:
     price = item.find(class_="price_color")
     instock = item.find(class_="instock availability")
     print(href.text, '\n', price.text, '\n', instock.text)
+
+# requests
+# BeautifulSoup4
