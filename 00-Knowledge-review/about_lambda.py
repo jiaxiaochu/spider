@@ -21,3 +21,13 @@ import time
 def time1():
     print(time.time())
 time1()
+
+
+
+# now = lambda: time.time()
+
+
+# print(now())
+# def do_time():
+#     print(time.time())
+# do_time()

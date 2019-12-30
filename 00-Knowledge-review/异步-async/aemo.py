@@ -5,4 +5,4 @@ import time
 
 now = lambda: time.time()
 start_time = now()
-print("Time:", now() - start_time)
+print("开始时间是:", now() - start_time)
