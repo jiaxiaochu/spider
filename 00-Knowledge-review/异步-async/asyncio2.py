@@ -28,7 +28,6 @@ loop.close()
 # 所以线程不会等待asyncio.sleep()，而是直接中断并执行下一个消息循环。
 # asyncio.sleep()返回时，线程就可以从yield from拿到返回值（此处是None），
 # 然后接着执行下一行语句。
-
 # 把asyncio.sleep(1)看成是一个耗时1秒的IO操作，
 # 在此期间，主线程并未等待，
 # 而是去执行EventLoop中其他可以执行的coroutine了，
