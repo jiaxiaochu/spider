@@ -7,7 +7,7 @@ import requests
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.65 Safari/535.11"
 }
-request_url = "https://c.y.qq.com/base/fcgi-bin/fcg_global_comment_h5.fcg"
+# request_url = "https://c.y.qq.com/base/fcgi-bin/fcg_global_comment_h5.fcg"
 params = {
     "g_tk": "490628805",
     "loginUin": "757585105",
@@ -32,10 +32,10 @@ params = {
     "cv": "10101010",
 }
 for i in range(5):
-    # request_url = "https://c.y.qq.com/base/fcgi-bin/fcg_global_comment_h5.fcg?&pagenum=" + str(i + 1)
+    request_url = "https://c.y.qq.com/base/fcgi-bin/fcg_global_comment_h5.fcg?&pagenum=" + str(i + 1)
     # print(request_url)
     response = requests.get(url=request_url, headers=headers, params=params)
-    print(response)
+    print(response.url)
     # print(response.status_code, '\n', response.apparent_encoding)
     # json_response = response.json()  # <class 'dict'>
     # list_comments = json_response['comment']['commentlist']
