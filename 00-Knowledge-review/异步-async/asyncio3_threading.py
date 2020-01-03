@@ -1,16 +1,19 @@
 # !/Library/Frameworks/Python.framework/Versions/3.7/bin/python3
 # -*- coding:utf-8 -*-
 # @Author : Jiazhixiang
+# !/Library/Frameworks/Python.framework/Versions/3.7/bin/python3
+# -*- coding:utf-8 -*-
+# @Author : Jiazhixiang
 import asyncio
-import time
+import threading
 
 
 @asyncio.coroutine
 def hello():
-    print("Hello world!")
+    print("Hello world! {}".format(threading.current_thread()))
     # 异步调用asyncio.sleep(1)
     step = yield from asyncio.sleep(1)
-    print("Hello again!")
+    print("Hello again! {}".format(threading.current_thread()))
 
 
 # 获取Evenloop
