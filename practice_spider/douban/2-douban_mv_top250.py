@@ -26,7 +26,7 @@ def get_content(url):
         response = requests.get(url, headers=headers)
         # response.status_code()
         response.raise_for_status()  # 如果返回的状态码不是200（请求不成功），则抛出异常
-        response.encoding = response.apparent_encoding  # 根据相应判断网页的编码格式，便于response.text知道如何编码
+        response.encoding = response.apparent_encoding  # 根据响应判断网页的编码格式，便于response.text知道如何编码
     except Exception as e:
         print("爬取错误")
     else:
