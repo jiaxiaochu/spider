@@ -13,6 +13,7 @@ client_url = "https://c.y.qq.com/soso/fcgi-bin/client_search_cp?ct=24&qqmusic_ve
 response = requests.get(url=client_url, headers=headers)
 print(response.status_code)
 print(response.apparent_encoding)
+response.encoding = response.apparent_encoding
 # response = response.text
 # print(type(response))
 json_response = response.json()

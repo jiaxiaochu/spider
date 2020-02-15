@@ -1,57 +1,68 @@
-class Master(object):
-    def __init__(self):
-        self.kongfu = "古法煎饼果子配方"  # 实例变量，属性
+import requests
 
-    def make_cake(self):  # 实例方法，方法
-        print("[古法] 按照 <%s> 制作了一份煎饼果子..." % self.kongfu)
+# 引入requests。
 
+url_login = 'https://xiaoke.kaikeba.com/example/wordpress/wp-login.php'
 
-# 父类是 Master类
-class School(Master):
-    def __init__(self):
-        self.kongfu = "现代煎饼果子配方"
+# 把请求登录的网址赋值给url。
 
-    def make_cake(self):
-        print("[现代] 按照 <%s> 制作了一份煎饼果子..." % self.kongfu)
-        super().__init__()  # 执行父类的构造方法
-        super().make_cake()  # 执行父类的实例方法
+headers = {
 
+    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36'
 
-# 父类是 School 和 Master
-class Prentice(School, Master):  # 多继承，继承了多个父类
-    def __init__(self):
-        self.kongfu = "猫氏煎饼果子配方"
+}
 
-    def make_cake(self):
-        self.__init__()  # 执行本类的__init__方法，做属性初始化 self.kongfu = "猫氏...."
-        print("[猫氏] 按照 <%s> 制作了一份煎饼果子..." % self.kongfu)
+# 加请求头，为了避免被反爬虫
 
-    def make_all_cake(self):
-        # 方式1. 指定执行父类的方法（代码臃肿）
-        # School.__init__(self)
-        # School.make_cake(self)
-        #
-        # Master.__init__(self)
-        # Master.make_cake(self)
-        #
-        # self.__init__()
-        # self.make_cake()
+data_login = {
 
-        # 方法2. super() 带参数版本，只支持新式类
-        # super(Prentice, self).__init__() # 执行父类的 __init__方法
-        # super(Prentice, self).make_cake()
-        # self.make_cake()
+    'log': 'kaikeba',  # 写入账户
 
-        # 方法3. super()的简化版，只支持新式类
-        super().__init__()  # 执行父类的 __init__方法
-        print("@@@")
-        super().make_cake()  # 执行父类的 实例方法
-        print("@@@")
-        self.make_cake()  # 执行本类的实例方法
+    'pwd': 'kaikeba888',  # 写入密码
+
+    'wp-submit': '登录',
+
+    'redirect_to': 'https://xiaoke.kaikeba.com/example/wordpress/2019/10/17/%e5%bc%80%e8%af%be%e5%90%a7%e6%97%a0%e6%95%8c%e5%a5%bd%e5%90%83%e7%9a%84%e9%a3%9f%e5%a0%82%e4%b8%80%e5%91%a8%e8%8f%9c%e8%b0%b1/',
+
+    'testcookie': '1'
+
+}
+
+# 把有关登录的参数封装成字典，赋值给data。
+
+login_in = requests.post(url_login, headers=headers, data=data_login)
+
+# 用requests.post发起请求，放入参数：请求登录的网址、请求头和登录参数，然后赋值给login_in。
+
+cookie = login_in.cookies
+
+# 提取cookie的方法：调用requests对象（login_in）的cookie属性获得登录的cookie，并赋值给变量cookie。
 
 
-damao = Prentice()
-# damao.make_cake()
-damao.make_all_cake()
-#
-# print(Prentice.__mro__)
+url_comment = 'https://xiaoke.kaikeba.com/example/wordpress/wp-comments-post.php'
+
+# 我们想要评论的文章网址。
+
+data_comment = {
+
+    'comment': input('请输入你想要发表的评论：'),
+
+    'submit': '发表评论',
+
+    'comment_post_ID': '35',
+
+    'comment_parent': '0'
+
+}
+
+# 把有关评论的参数封装成字典。
+
+comment = requests.post(url_comment, headers=headers, data=data_comment, cookies=cookie)
+
+# 用requests.post发起发表评论的请求，放入参数：文章网址、headers、评论参数、cookie参数，赋值给comment。
+
+# 调用cookie的方法就是在post请求中传入cookie=cookie的参数。
+
+print(comment.status_code)
+
+# 打印出comment的状态码，若状态码等于200，则证明我们评论成功。
