@@ -6,6 +6,10 @@ import time
 from selenium import webdriver
 
 start_url = "https://www.baidu.com/"
+
+options = webdriver.ChromeOptions()
+# options.binary_location = r"D:\Software\Chrome\Application\chrome.exe"
+# driver = webdriver.Chrome(chrome_options=options)
 driver = webdriver.Chrome()
 driver.get(url=start_url)
 
