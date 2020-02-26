@@ -1,67 +1,68 @@
-menu_list = [{"id": 1, "name": "1.蛋炒面", "price": "12", "¥": "元"},
-             {"id": 2, "name": "2.回勺面", "price": "15", "¥": "元"},
-             {"id": 3, "name": "3.刀削面", "price": "8", "¥": "元"},
-             {"id": 4, "name": "4.饸饹面", "price": "9", "¥": "元"}]
-order_list = []
-print('===========公司食堂开业啦，欢迎大家============')
-print('今日菜单')
-for menu in menu_list:
-    print(menu.get("name"), menu.get("price"), menu.get("¥"))
-while True:
-    print('=' * 50)
-    print('1.点餐\n2.取消点菜\n3.确认菜单\n4.结账')
-    choose = int(input('1请选择服务：'))
-    if choose == 1:
-        while True:
-            menu_add = input('请输入菜名编号或输入n结束：')
-            if menu_add is not str:
-                # if menu_add != 'n':
-                for m in menu_list:
-                    if m.get('id') == int(menu_add):
-                        print(m)
-                        order_list.append(m)
-                        print("order_list:{}".format(order_list))
-                        break
-                    else:
-                        print('输入错误1')
-            else:
-                print('点餐完毕')
-                total_price = 0
-                for order in order_list:
-                    print(order.get("name"), order.get("price"), order.get("¥"))
-                    total_price += int(order.get("price"))
-                    print('本次用餐价格为：{}元'.format(total_price))
-                break
-    elif choose == 2:
-        while True:
-            menu_del = input('请输入要取消的菜名编号或输入o结束：')
-            if menu_del != 'o':
-                for n in order_list:
-                    if n.get("id") == int(menu_del):
-                        order_list.remove(n)
-                        print('已取消')
-                    else:
-                        print('输入错误2')
-                total_price = 0
-                for order in order_list:
-                    print(order.get("name"), order.get("price"), order.get("¥"))
-                    total_price += int(order.get("price"))
-                    print('本次用餐价格为：{}元'.format(total_price))
-                break
-    elif choose == 3:
-        print('您点的菜为：')
-        total_price = 0
-        for order in order_list:
-            print(order.get("name"), order.get("price"), order.get("¥"))
-            total_price += int(order.get("price"))
-            # print('
-            print('本次用餐价格为：{}元'.format(total_price))
-    elif choose == 4:
-        print('您的消费菜单为：')
-        total_price = 0
-        for order in order_list:
-            print(order.get("name"), order.get("price"), order.get("¥"))
-            total_price += int(order.get("price"))
-        print('本次用餐共计：{}元'.format(total_price))
-        print('感谢您光临本店')
-        break
+import requests
+import smtplib
+import schedule
+import time
+from bs4 import BeautifulSoup
+from email.mime.text import MIMEText
+from email.header import Header
+
+account = '1030135838@qq.com'  # input('请输入你的邮箱：')
+password = 'mqubgmhqeilnbahf'  # input('请输入你的密码：')
+receiver = '1072022525@qq.com'  # input('请输入收件人的邮箱：')
+index = 0
+
+
+def movie_spider():
+    headers = {
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36'}
+    url = 'https://at.alicdn.com/t/font_1358396_idad7a5g6ir.css'
+    res_movies = requests.get(url, headers=headers)
+    bs_movies = BeautifulSoup(res_movies.text, 'html.parser')
+    list_movies = bs_movies.find_all('div', class_='pl2')
+    list_all = []
+    for movie in list_movies:
+        tag_a = movie.find('a')
+        name = tag_a.text.replace(' ', '').replace('\n', '')
+        url = tag_a['href']
+        tag_p = movie.find('p', class_='pl')
+        information = tag_p.text.replace(' ', '').replace('\n', '')
+        tag_div = movie.find('div', class_='star clearfix')
+        rating = tag_div.text.replace(' ', '').replace('\n', '')
+
+        list_all.append(name + url + information + rating)
+    return list_all
+
+def send_email(movie_list):
+    global account, password, receiver
+    mailhost = 'smtp.qq.com'
+    qqmail = smtplib.SMTP()
+    qqmail.connect(mailhost, 25)
+    qqmail.login(account, password)
+    content = '测试测试测试测试\n'.join(movie_list)
+    print(content, "@@测试content测试@@")
+    message = MIMEText(content, 'plain', 'utf-8')
+    subject = '本周豆瓣新片榜'
+    message['Subject'] = Header(subject, 'utf-8')
+    try:
+        qqmail.sendmail(account, receiver, message.as_string())
+        print('邮件发送成功')
+    except:
+        print('邮件发送失败')
+    qqmail.quit()
+
+
+def job():
+    global index
+    print('开始任务')
+    movie_list = movie_spider()
+    send_email(movie_list)
+    print(movie_list)
+    print('任务完成')
+    index += 1
+
+
+schedule.every().second.do(job)
+
+while index != 2:
+    schedule.run_pending()
+    time.sleep(1)
