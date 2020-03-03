@@ -35,7 +35,7 @@ import time
 g_num = 0
 
 
-def test1(num):
+def count1(num):
     global g_num
     for i in range(num):
         mutex.acquire()  # 上锁
@@ -45,7 +45,7 @@ def test1(num):
     print("---test1---g_num=%d" % g_num)
 
 
-def test2(num):
+def count2(num):
     global g_num
     for i in range(num):
         mutex.acquire()  # 上锁
@@ -60,10 +60,10 @@ def test2(num):
 mutex = threading.Lock()
 
 # 创建2个线程，让他们各自对g_num加1000000次
-p1 = threading.Thread(target=test1, args=(1000000,))
+p1 = threading.Thread(target=count1, args=(1000000,))
 p1.start()
 
-p2 = threading.Thread(target=test2, args=(1000000,))
+p2 = threading.Thread(target=count2, args=(1000000,))
 p2.start()
 
 # 等待计算完成
@@ -74,7 +74,8 @@ print("2个线程对同一个全局变量操作之后的最终结果是:%s" % g_
 
 
 # 当一个线程调用锁的acquire()方法获得锁时，锁就进入“locked”状态。
-# 每次只有一个线程可以获得锁。如果此时另一个线程试图获得这个锁，该线程就会变为“blocked”状态，称为“阻塞”，直到拥有锁的线程调用锁的release()方法释放锁之后，锁进入“unlocked”状态。
+# 每次只有一个线程可以获得锁。如果此时另一个线程试图获得这个锁，该线程就会变为“blocked”状态，称为“阻塞”，
+# 直到拥有锁的线程调用锁的release()方法释放锁之后，锁进入“unlocked”状态。
 # 线程调度程序从处于同步阻塞状态的线程中选择一个来获得锁，并使得该线程进入运行（running）状态。
 
 # 总结
@@ -83,3 +84,4 @@ print("2个线程对同一个全局变量操作之后的最终结果是:%s" % g_
 # 锁的坏处：
 # 阻止了多线程并发执行，包含锁的某段代码实际上只能以单线程模式执行，效率就大大地下降了
 # 由于可以存在多个锁，不同的线程持有不同的锁，并试图获取对方持有的锁时，可能会造成死锁
+

@@ -23,7 +23,7 @@ data = [1, 2, 3, 4, 5, 6]
 
 # 1 获取到可迭代对象中提供的迭代器 返回值就是迭代器
 data_iter = iter(data)
-# print(data_iter, type(data_iter))
+print(data_iter, type(data_iter))
 
 # 2 通过迭代器取出下一个元素  返回值就是下一个元素的值
 #   如果已经没有元素可以取出了 就会抛出一个异常 StopIteration停止迭代

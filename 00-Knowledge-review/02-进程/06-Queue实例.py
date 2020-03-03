@@ -22,6 +22,7 @@ def read(q):
             print('Get %s from queue.' % value)
             time.sleep(random.random())
         else:
+            print("队列为空，正在退出读取。。。")
             break
 
 
@@ -34,9 +35,10 @@ if __name__ == '__main__':
     pw.start()
     # 等待pw结束:
     pw.join()
+
     # 启动子进程pr，读取:
     pr.start()
     pr.join()
-    # pr进程里是死循环，无法等待其结束，只能强行终止:
+    # pr进程里是死循环，无法等待其结束，只能强行终止:break
     print('')
     print('所有数据都写入并且读完')

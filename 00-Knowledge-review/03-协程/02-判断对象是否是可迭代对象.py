@@ -22,5 +22,12 @@ print(isinstance([1, 2, 3, 4], Iterator))  # False 可迭代对象不是迭代�
 print(isinstance(data_iter, Iterable))  # True Python规定: 迭代器必须是可迭代类型对象
 
 # 因为迭代器是可迭代对象 所以能够使用for循环进行遍历
-for i in data_iter:
-    print(i)
+# for i in data_iter:
+#     print(i)
+while True:
+    try:
+        i = next(data_iter)
+    except StopIteration:
+        break
+    else:
+        print(i)

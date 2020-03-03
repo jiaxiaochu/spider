@@ -15,5 +15,5 @@
 对于IO密集型的操作，多线程可以明显提高效率，列如Python爬虫的开发，绝大多数时间爬虫是在等待socket返回数据，网络IO的操作延迟比CPU大得多。
 
 '''
-# import keyword
-# print(keyword.kwlist)
+import keyword
+print(keyword.kwlist)
