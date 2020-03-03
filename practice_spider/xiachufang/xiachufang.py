@@ -12,12 +12,13 @@ content = soup.find_all('div', class_="info pure-u")
 
 for item in content:
     food_name = item.find('p').text.replace(' ', '').replace('\n', '')
-    link = item.find('a')
-    material = item.find(class_="ing ellipsis")
-    do_time = item.find(class_="stats green-font")
-    who_did = item.find(class_="author")
-    print(food_name, '\n', 'http://www.xiachufang.com' + link['href'], '\n', material.text, '\n', do_time.text,
-          '\n', who_did.text)
+    # print(food_name)
+    link = item.find('a')['href'].replace(' ', '')
+    material = item.find(class_="ing ellipsis").text.replace(' ', '').replace('\n', '')
+    do_time = item.find(class_="stats green-font").text.replace(' ', '').replace('\n', '')
+    who_did = item.find(class_="author").text.replace(' ', '').replace('\n', '')
+    # print(food_name, '\n', 'http://www.xiachufang.com' + link, '\n', material, '\n', do_time,
+    #       '\n', who_did)
 
 
 # dict_all = {}

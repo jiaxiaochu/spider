@@ -22,6 +22,7 @@ def work2():
 
 
 if __name__ == '__main__':
+    print("---线程创建之前g_num is %d---" % g_num)
     t1 = Thread(target=work1)
     t1.start()
 
@@ -29,3 +30,7 @@ if __name__ == '__main__':
 
     t2 = Thread(target=work2)
     t2.start()
+""":arg
+在一个进程内的所有线程共享全局变量，很方便在多个线程间共享数据
+缺点就是，线程是对全局变量随意遂改可能造成多线程之间对全局变量的混乱（即非线程安全）
+"""

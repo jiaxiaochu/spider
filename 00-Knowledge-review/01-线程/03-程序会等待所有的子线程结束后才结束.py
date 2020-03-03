@@ -24,5 +24,5 @@ if __name__ == '__main__':
     t2 = threading.Thread(target=dance)
     t1.start()
     t2.start()
-    # sleep(5)
+    # sleep(5)   # 屏蔽此行代码，试试看，程序是否会立马结束？
     print("---程序结束---：%s" % ctime())
