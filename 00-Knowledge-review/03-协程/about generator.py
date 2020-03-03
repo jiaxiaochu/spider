@@ -1,14 +1,20 @@
 def func1():
     for i in range(1, 5):
         print(i)
+
+
 #
 def func2():
     for i in range(1, 5):
         return i
+
+
 #
 def func3():
     for i in range(1, 5):
         yield i
+
+
 #
 func1()
 print("@@@@@@@@@@@")
@@ -44,9 +50,6 @@ print(next(gob))  # 4
 # print(next(gob))  # 3
 # print(next(gob))  # 4
 # print(next(gob))  # 报错
-
-
-
 
 
 # def func3():

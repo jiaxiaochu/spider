@@ -45,5 +45,5 @@ if __name__ == '__main__':
     # 等待所有协程执行完成
     # gevent.joinall([g1, g2])
 
-for i in range(3):
-    print(i)
+# for i in range(3):
+#     print(i)
