@@ -17,8 +17,8 @@ for item in content:
     material = item.find(class_="ing ellipsis").text.replace(' ', '').replace('\n', '')
     do_time = item.find(class_="stats green-font").text.replace(' ', '').replace('\n', '')
     who_did = item.find(class_="author").text.replace(' ', '').replace('\n', '')
-    # print(food_name, '\n', 'http://www.xiachufang.com' + link, '\n', material, '\n', do_time,
-    #       '\n', who_did)
+    print(food_name, '\n', 'http://www.xiachufang.com' + link, '\n', material, '\n', do_time,
+          '\n', who_did)
 
 
 # dict_all = {}
