@@ -95,8 +95,8 @@ if __name__ == '__main__':
     # a.send_mail()
 
     # 邮箱测试
-    b = SendMail(smtp_server=input('请输入邮箱服务器地址SMTP server: '),
-                 smtp_port=25, # 163邮箱非SSL（端口号25） qq:465
+    b = SendMail(smtp_server=input('请输入邮箱服务器地址SMTP server: '),  # smtp.163.com
+                 smtp_port=25,  # 163邮箱非SSL（端口号25） qq:465
                  smtp_sender=input('请输入发件人的邮箱号码From: '),
                  smtp_senderpassword=input('请输入发件人的邮箱密码Password: '),
                  smtp_receiver=input('请输入收件人的邮箱：'),
