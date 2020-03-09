@@ -1,6 +1,22 @@
 # !/Library/Frameworks/Python.framework/Versions/3.7/bin/python3
 # -*- coding:utf-8 -*-
 # @Author : Jiazhixiang
+""":arg
+work = Queue()实例化一个队列，可以传入参数，如Queue(10)表示队列只能存储10个成员。
+work.put_nowait(url)表示：添加队列的成员
+while not work.empty():表示：当这个队列不为空时
+url = work.get_nowait()表示：取出队列的成员
+work.qsize()表示:队列的长度
+tasks_list = [gevent.spawn(crawler) for x in range(2)]相当于创建2个爬虫执行crawler()函数
+gevent.joinall(tasks_list)启动所有任务
+
+
+put_nowait()    # 往队列里存储数据
+get_nowait()    # 从队列里取出数据
+empty()         # 判断队列是否为空
+full()          # 判断队列是否为满
+qsize()         # 判断队列还剩多少数量
+"""
 
 from gevent import monkey
 
